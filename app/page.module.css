@@ -1,3 +1,8 @@
-.main {
+.container {
+  padding: 2rem;
   text-align: center;
+}
+
+.title__page {
+  margin-bottom: 1rem;
 }
