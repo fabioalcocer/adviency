@@ -3,7 +3,23 @@
 import { useState } from 'react'
 
 function WishList () {
-  const [gifts, setGifts] = useState(['Tenis', 'Mochila', 'Taza'])
+  const [giftName, setGiftName] = useState('')
+
+  const [gifts, setGifts] = useState([
+    { name: 'Tenis', done: true }
+  ])
+
+  const createNewGift = (giftName) => {
+    if (!gifts.find((task) => task.name === giftName)) {
+      setGifts([...gifts, { name: giftName, done: false }])
+    }
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    createNewGift(giftName)
+    setGiftName('')
+  }
 
   return (
     <div className='bg-white text-slate-900 mx-auto max-w-sm p-6 flex flex-col gap-4'>
@@ -11,9 +27,12 @@ function WishList () {
         Regalos
       </h1>
 
-      <form className='flex gap-2'>
+      <form className='flex gap-2' onSubmit={handleSubmit}>
         <input
+          value={giftName}
+          placeholder='Enter gift name'
           type='text'
+          onChange={(e) => setGiftName(e.target.value)}
           className='bg-white border-2 border-slate-800'
         />
         <button
@@ -28,7 +47,7 @@ function WishList () {
       <div>
         <ul className='text-xl'>
           {gifts.map((gift, index) => (
-            <li key={index}>{gift}</li>
+            <li key={index}>{gift.name}</li>
           ))}
         </ul>
       </div>
