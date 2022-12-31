@@ -20,6 +20,9 @@ function WishList () {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    if (!e.target.name.value.trim()) return
+
     createNewGift(giftName)
     setGiftName('')
   }
@@ -37,6 +40,8 @@ function WishList () {
       <form className='flex gap-2' onSubmit={handleSubmit}>
         <input
           value={giftName}
+          required
+          name='name'
           placeholder='Enter gift name'
           type='text'
           onChange={(e) => setGiftName(e.target.value)}
@@ -53,7 +58,7 @@ function WishList () {
 
       <div>
         <ul className='text-xl'>
-          {gifts.length > 0
+          {gifts.length
             ? (
                 gifts.map((gift, index) => (
                   <div
@@ -71,7 +76,7 @@ function WishList () {
                 ))
               )
             : (
-              <p>No hay nada</p>
+              <p>No hay regalos ¡Agrega alguno!</p>
               )}
         </ul>
       </div>
