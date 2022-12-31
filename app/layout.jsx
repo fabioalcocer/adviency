@@ -10,7 +10,6 @@ export default function RootLayout ({ children }) {
       <head />
       <body>{children}</body>
       <script defer src='https://app.embed.im/snow.js' async />
-
     </html>
   )
 }

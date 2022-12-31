@@ -6,12 +6,15 @@ function WishList () {
   const [giftName, setGiftName] = useState('')
 
   const [gifts, setGifts] = useState([
-    { name: 'Tenis', done: true }
+    { id: +new Date(), name: 'Tenis', done: true }
   ])
 
   const createNewGift = (giftName) => {
     if (!gifts.find((task) => task.name === giftName)) {
-      setGifts([...gifts, { name: giftName, done: false }])
+      setGifts([
+        ...gifts,
+        { id: +new Date(), name: giftName, done: false }
+      ])
     }
   }
 
@@ -19,6 +22,10 @@ function WishList () {
     e.preventDefault()
     createNewGift(giftName)
     setGiftName('')
+  }
+
+  const handleDelete = (id) => {
+    setGifts((gifts) => gifts.filter((gift) => gift.id !== id))
   }
 
   return (
@@ -33,7 +40,7 @@ function WishList () {
           placeholder='Enter gift name'
           type='text'
           onChange={(e) => setGiftName(e.target.value)}
-          className='bg-white border-2 border-slate-800'
+          className='bg-white border-2 border-slate-800 pl-2'
         />
         <button
           className='bg-red-500 px-2 py-1'
@@ -46,11 +53,35 @@ function WishList () {
 
       <div>
         <ul className='text-xl'>
-          {gifts.map((gift, index) => (
-            <li key={index}>{gift.name}</li>
-          ))}
+          {gifts.length > 0
+            ? (
+                gifts.map((gift, index) => (
+                  <div
+                    className='flex justify-between bg-slate-100 items-center pl-2 py-1'
+                    key={index}
+                  >
+                    <li>{gift.name}</li>
+                    <button
+                      className='p-2 h-8 grid place-content-center bg-red-600'
+                      onClick={() => handleDelete(gift.id)}
+                    >
+                      X
+                    </button>
+                  </div>
+                ))
+              )
+            : (
+              <p>No hay nada</p>
+              )}
         </ul>
       </div>
+
+      <button
+        className='bg-red-600 w-full text-white p-2'
+        onClick={() => setGifts([])}
+      >
+        Delete All
+      </button>
     </div>
   )
 }
