@@ -34,7 +34,7 @@ function WishList () {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (!e.target.name.value.trim()) return
+    if (!e.target.name.value.trim() || gift.quantity < 1) return
 
     createNewGift(gift)
 
@@ -112,9 +112,9 @@ function WishList () {
                         alt='gift image'
                       />
                       <p className='font-semibold flex items-center'>
-                        {gift.name}{' '}
+                        {gift.name}
                         <span className='text-slate-700 text-base ml-1'>
-                          (x {gift.quantity})
+                          {`(x${gift.quantity})`}
                         </span>
                       </p>
                     </li>
