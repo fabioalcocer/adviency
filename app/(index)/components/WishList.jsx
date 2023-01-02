@@ -7,20 +7,15 @@ function WishList () {
   const [gift, setGift] = useState({
     id: +new Date(),
     name: '',
-    quantity: ''
+    image: '',
+    quantity: 1
   })
 
-  const [gifts, setGifts] = useLocalStorage(
-    'gifts',
-    []
-  )
+  const [gifts, setGifts] = useLocalStorage('gifts', [])
 
   const createNewGift = (gift) => {
     if (!gifts.find((g) => g.name === gift.name)) {
-      setGifts([
-        ...gifts,
-        { id: +new Date(), name: gift.name, quantity: gift.quantity }
-      ])
+      setGifts([...gifts, gift])
     }
   }
 
@@ -45,6 +40,7 @@ function WishList () {
     setGift({
       id: +new Date(),
       name: '',
+      image: '',
       quantity: 1
     })
   }
@@ -64,6 +60,17 @@ function WishList () {
           value={gift.name}
           name='name'
           placeholder='Enter gift name'
+          type='text'
+          onChange={handleChange}
+          autoComplete='off'
+          className='peer w-full rounded-md border border-slate-300 bg-white p-2 text-sm placeholder-slate-600/80
+          focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500
+          focus:invalid:border-pink-500 focus:invalid:ring-pink-500'
+        />
+        <input
+          value={gift.image}
+          name='image'
+          placeholder='Enter url'
           type='text'
           onChange={handleChange}
           className='peer w-full rounded-md border border-slate-300 bg-white p-2 text-sm placeholder-slate-600/80
@@ -94,13 +101,18 @@ function WishList () {
             ? (
                 gifts.map((gift, index) => (
                   <div
-                    className='flex w-full rounded-sm overflow-hidden'
+                    className='flex w-full rounded-md overflow-hidden'
                     key={index}
                   >
-                    <li className='flex justify-between bg-slate-50 items-center pl-2 py-1 w-full'>
+                    <li className='flex gap-4 bg-slate-50 items-center w-full'>
+                      <img
+                        className='w-20 h-20 object-cover'
+                        src={gift.image}
+                        alt='gift image'
+                      />
                       <p className='font-semibold flex items-center'>
                         {gift.name}{' '}
-                        <span className='text-slate-700 text-base ml-3'>
+                        <span className='text-slate-700 text-base ml-1'>
                           (x {gift.quantity})
                         </span>
                       </p>
@@ -115,7 +127,15 @@ function WishList () {
                 ))
               )
             : (
-              <p>No hay regalos ¡Agrega alguno!</p>
+              <>
+                <p className='text-center'>
+                  No hay regalos ¡Agrega alguno!
+                </p>
+                <img
+                  className='h-80 w-80'
+                  src='https://media.discordapp.net/attachments/989369450291683338/1059568020349005944/a21f1ac3-413c-4ec5-bda7-2aa6a47dc389.png'
+                />
+              </>
               )}
         </ul>
       </div>
