@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import useLocalStorage from '../hooks/useLocalStorage'
 
 function WishList () {
   const [gift, setGift] = useState({
@@ -9,9 +10,10 @@ function WishList () {
     quantity: ''
   })
 
-  const [gifts, setGifts] = useState([
-    { id: +new Date(), name: 'Tenis', quantity: 1 }
-  ])
+  const [gifts, setGifts] = useLocalStorage(
+    'gifts',
+    []
+  )
 
   const createNewGift = (gift) => {
     if (!gifts.find((g) => g.name === gift.name)) {
