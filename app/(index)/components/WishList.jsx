@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import { useState } from 'react'
@@ -134,6 +135,7 @@ function WishList () {
                 <img
                   className='h-80 w-80'
                   src='https://media.discordapp.net/attachments/989369450291683338/1059568020349005944/a21f1ac3-413c-4ec5-bda7-2aa6a47dc389.png'
+                  alt='image that warns that there are no gifts '
                 />
               </>
               )}
