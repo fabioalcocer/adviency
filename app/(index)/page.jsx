@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home () {
   return (
     <main
-      className={`${inter.className} flex items-center min-h-screen bg-emerald-800`}
+      className={`${inter.className} flex items-center min-h-screen bg-emerald-800 px-4`}
     >
       <WishList />
     </main>

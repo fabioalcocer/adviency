@@ -51,7 +51,7 @@ function WishList () {
   }
 
   return (
-    <div className='bg-white text-slate-900 mx-auto max-w-sm p-6 flex flex-col gap-4 rounded-md'>
+    <div className='bg-white text-slate-900 mx-auto max-w-md p-6 flex flex-col gap-4 rounded-md'>
       <h1 className='text-4xl text-center text-red-500 font-semibold'>
         Regalos
       </h1>
