@@ -3,28 +3,48 @@
 import { useState } from 'react'
 
 function WishList () {
-  const [giftName, setGiftName] = useState('')
+  const [gift, setGift] = useState({
+    id: +new Date(),
+    name: '',
+    quantity: ''
+  })
 
   const [gifts, setGifts] = useState([
-    { id: +new Date(), name: 'Tenis', done: true }
+    { id: +new Date(), name: 'Tenis', quantity: 1 }
   ])
 
-  const createNewGift = (giftName) => {
-    if (!gifts.find((task) => task.name === giftName)) {
+  const createNewGift = (gift) => {
+    if (!gifts.find((g) => g.name === gift.name)) {
       setGifts([
         ...gifts,
-        { id: +new Date(), name: giftName, done: false }
+        { id: +new Date(), name: gift.name, quantity: gift.quantity }
       ])
     }
   }
 
+  const handleChange = (e) => {
+    console.log(e.target.value)
+    console.log(e.target.name)
+
+    const { name, value, checked, type } = e.target
+
+    setGift({
+      ...gift,
+      [name]: type === 'checkbox' ? checked : value
+    })
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
-
     if (!e.target.name.value.trim()) return
 
-    createNewGift(giftName)
-    setGiftName('')
+    createNewGift(gift)
+
+    setGift({
+      id: +new Date(),
+      name: '',
+      quantity: 1
+    })
   }
 
   const handleDelete = (id) => {
@@ -32,42 +52,59 @@ function WishList () {
   }
 
   return (
-    <div className='bg-white text-slate-900 mx-auto max-w-sm p-6 flex flex-col gap-4'>
+    <div className='bg-white text-slate-900 mx-auto max-w-sm p-6 flex flex-col gap-4 rounded-md'>
       <h1 className='text-4xl text-center text-red-500 font-semibold'>
         Regalos
       </h1>
 
       <form className='flex gap-2' onSubmit={handleSubmit}>
         <input
-          value={giftName}
-          required
+          value={gift.name}
           name='name'
           placeholder='Enter gift name'
           type='text'
-          onChange={(e) => setGiftName(e.target.value)}
-          className='bg-white border-2 border-slate-800 pl-2'
+          onChange={handleChange}
+          className='peer w-full rounded-md border border-slate-300 bg-white p-2 text-sm placeholder-slate-600/80
+          focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500
+          focus:invalid:border-pink-500 focus:invalid:ring-pink-500'
+        />
+        <input
+          value={gift.quantity}
+          type='number'
+          name='quantity'
+          placeholder='1'
+          onChange={handleChange}
+          className='w-10 peer rounded-md border border-slate-300 bg-white p-2 text-sm placeholder-slate-600/80
+          focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500
+          focus:invalid:border-pink-500 focus:invalid:ring-pink-500'
         />
         <button
-          className='bg-red-500 px-2 py-1'
+          className='bg-red-500 px-2 py-1 text-white font-semibold rounded-sm flex-1'
           type='submit'
-          value='add'
         >
           Add
         </button>
       </form>
 
       <div>
-        <ul className='text-xl'>
+        <ul className='text-xl flex flex-col gap-2'>
           {gifts.length
             ? (
                 gifts.map((gift, index) => (
                   <div
-                    className='flex justify-between bg-slate-100 items-center pl-2 py-1'
+                    className='flex w-full rounded-sm overflow-hidden'
                     key={index}
                   >
-                    <li>{gift.name}</li>
+                    <li className='flex justify-between bg-slate-50 items-center pl-2 py-1 w-full'>
+                      <p className='font-semibold flex items-center'>
+                        {gift.name}{' '}
+                        <span className='text-slate-700 text-base ml-3'>
+                          (x {gift.quantity})
+                        </span>
+                      </p>
+                    </li>
                     <button
-                      className='p-2 h-8 grid place-content-center bg-red-600'
+                      className='p-2 py-0 grid place-content-center bg-red-500 text-white'
                       onClick={() => handleDelete(gift.id)}
                     >
                       X
@@ -82,7 +119,7 @@ function WishList () {
       </div>
 
       <button
-        className='bg-red-600 w-full text-white p-2'
+        className='bg-red-500 text-white p-2 rounded-md hover:bg-red-400'
         onClick={() => setGifts([])}
       >
         Delete All
