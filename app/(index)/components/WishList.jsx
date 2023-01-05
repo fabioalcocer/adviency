@@ -3,8 +3,11 @@
 
 import { useState } from 'react'
 import useLocalStorage from '../hooks/useLocalStorage'
+import Modal from './Modal'
 
 function WishList () {
+  const [showModal, setShowModal] = useState(false)
+
   const [gift, setGift] = useState({
     id: +new Date(),
     name: '',
@@ -38,6 +41,8 @@ function WishList () {
 
     createNewGift(gift)
 
+    setShowModal(false)
+
     setGift({
       id: +new Date(),
       name: '',
@@ -51,50 +56,18 @@ function WishList () {
   }
 
   return (
-    <div className='bg-white text-slate-900 mx-auto max-w-md p-6 flex flex-col gap-4 rounded-md'>
+    <div className='bg-white text-slate-900 mx-auto max-w-md min-w-[400px] p-6 flex flex-col gap-4 rounded-md'>
       <h1 className='text-4xl text-center text-red-500 font-semibold'>
         Regalos
       </h1>
 
-      <form className='flex gap-2' onSubmit={handleSubmit}>
-        <input
-          value={gift.name}
-          name='name'
-          placeholder='Enter gift name'
-          type='text'
-          onChange={handleChange}
-          autoComplete='off'
-          className='peer w-full rounded-md border border-slate-300 bg-white p-2 text-sm placeholder-slate-600/80
-          focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500
-          focus:invalid:border-pink-500 focus:invalid:ring-pink-500'
-        />
-        <input
-          value={gift.image}
-          name='image'
-          placeholder='Enter url'
-          type='text'
-          onChange={handleChange}
-          className='peer w-full rounded-md border border-slate-300 bg-white p-2 text-sm placeholder-slate-600/80
-          focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500
-          focus:invalid:border-pink-500 focus:invalid:ring-pink-500'
-        />
-        <input
-          value={gift.quantity}
-          type='number'
-          name='quantity'
-          placeholder='1'
-          onChange={handleChange}
-          className='w-10 peer rounded-md border border-slate-300 bg-white p-2 text-sm placeholder-slate-600/80
-          focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500
-          focus:invalid:border-pink-500 focus:invalid:ring-pink-500'
-        />
-        <button
-          className='bg-red-500 px-2 py-1 text-white font-semibold rounded-sm flex-1'
-          type='submit'
-        >
-          Add
-        </button>
-      </form>
+      <Modal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        gift={gift}
+      />
 
       <div>
         <ul className='text-xl flex flex-col gap-2'>
