@@ -133,7 +133,7 @@ function WishList () {
                   No hay regalos ¡Agrega alguno!
                 </p>
                 <img
-                  className='h-80 w-80'
+                  className='h-80 w-80 mx-auto'
                   src='https://media.discordapp.net/attachments/989369450291683338/1059568020349005944/a21f1ac3-413c-4ec5-bda7-2aa6a47dc389.png'
                   alt='image that warns that there are no gifts '
                 />
