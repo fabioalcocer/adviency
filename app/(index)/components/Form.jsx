@@ -1,4 +1,16 @@
-function Form ({ createNewGift, setGift, gift, setShowModal }) {
+'use client'
+
+import { useState } from 'react'
+
+function Form ({ createNewGift, setShowModal, editGift }) {
+  const [gift, setGift] = useState({
+    id: +new Date(),
+    name: editGift?.name ?? '',
+    image: editGift?.image ?? '',
+    quantity: editGift?.quantity ?? 1,
+    receiver: editGift?.receiver ?? ''
+  })
+
   const handleChange = (e) => {
     const { name, value, checked, type } = e.target
 

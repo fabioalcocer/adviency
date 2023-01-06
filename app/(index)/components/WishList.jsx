@@ -8,16 +8,8 @@ import Modal from './Modal'
 
 function WishList () {
   const [showModal, setShowModal] = useState(false)
-
   const [gifts, setGifts] = useLocalStorage('gifts', [])
-
-  const [gift, setGift] = useState({
-    id: +new Date(),
-    name: '',
-    image: '',
-    quantity: 1,
-    receiver: ''
-  })
+  const [editGift, setEditGift] = useState()
 
   const createNewGift = (gift) => {
     if (!gifts.find((g) => g.name === gift.name)) {
@@ -27,8 +19,7 @@ function WishList () {
 
   const handleEdit = (gift) => {
     setShowModal(true)
-    console.log(gift)
-    return gift
+    setEditGift(gift)
 
     // setGifts((items) => {
     //   return items.map((_gift) => (_gift.id === gift.id ? gift : _gift))
@@ -40,7 +31,7 @@ function WishList () {
   }
 
   return (
-    <div className='bg-white text-slate-900 mx-auto max-w-md w-full p-6 flex flex-col gap-4 rounded-md'>
+    <div className='bg-white text-slate-900 mx-auto max-w-md w-full p-6 px-4 sm:px-6 flex flex-col gap-4 rounded-md'>
       <h1 className='text-4xl text-center text-red-500 font-semibold'>
         Whishlist
       </h1>
@@ -48,9 +39,8 @@ function WishList () {
       <Modal showModal={showModal} setShowModal={setShowModal}>
         <Form
           setShowModal={setShowModal}
-          setGift={setGift}
           createNewGift={createNewGift}
-          gift={gift}
+          editGift={editGift}
         />
       </Modal>
 
@@ -65,7 +55,7 @@ function WishList () {
                   >
                     <li className='flex gap-4 bg-slate-50 items-center w-full pr-3'>
                       <img
-                        className='w-20 h-20 object-cover'
+                        className='w-16 sm:w-20 h-20 object-cover'
                         src={gift.image}
                         alt='gift image'
                       />
@@ -81,15 +71,15 @@ function WishList () {
                         </p>
                       </div>
 
-                      <div className='flex items-center gap-3 ml-auto'>
+                      <div className='flex items-center gap-2 sm:gap-3 ml-auto'>
                         <button
-                          className='p-2 py-1 rounded-sm grid place-content-center bg-emerald-700 text-white'
+                          className='p-2 py-1 rounded-sm sm:font-semibold bg-emerald-700 text-white text-sm sm:text-base'
                           onClick={() => handleEdit(gift)}
                         >
                           Edit
                         </button>
                         <button
-                          className='p-2 py-1 rounded-sm grid place-content-center bg-rose-600 text-white'
+                          className='p-2 py-1 rounded-sm text-sm sm:text-base sm:font-semibold bg-rose-600 text-white'
                           onClick={() => handleDelete(gift.id)}
                         >
                           X
