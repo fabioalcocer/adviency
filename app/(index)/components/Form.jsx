@@ -32,13 +32,22 @@ function Form ({ handleSubmit, handleChange, gift, setShowModal }) {
           focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500
           focus:invalid:border-pink-500 focus:invalid:ring-pink-500'
       />
-      <button
-        className='bg-red-500 px-2 py-1 text-white font-semibold rounded-sm flex-1'
-        type='submit'
+      <div className='flex items-center justify-between gap-8'>
+        <button
+          className='pl-1 pr-2 py-1 bg-slate-100 text-slate-600 font-semibold rounded-sm flex-1'
+          onClick={() => setShowModal(false)}
+        >
+          Close
+        </button>
 
-      >
-        Add
-      </button>
+        <button
+          className='bg-red-500 px-2 py-1 text-white font-semibold rounded-sm flex-1'
+          type='submit'
+        >
+          Add
+        </button>
+
+      </div>
     </form>
   )
 }

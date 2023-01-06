@@ -56,7 +56,7 @@ function WishList () {
   }
 
   return (
-    <div className='bg-white text-slate-900 mx-auto max-w-md min-w-[400px] p-6 flex flex-col gap-4 rounded-md'>
+    <div className='bg-white text-slate-900 mx-auto max-w-md w-full p-6 flex flex-col gap-4 rounded-md'>
       <h1 className='text-4xl text-center text-red-500 font-semibold'>
         Regalos
       </h1>
@@ -116,7 +116,7 @@ function WishList () {
       </div>
 
       <button
-        className='bg-red-500 text-white p-2 rounded-md hover:bg-red-400'
+        className='bg-red-500 text-white font-semibold p-2 rounded-md hover:bg-red-400'
         onClick={() => setGifts([])}
       >
         Delete All
