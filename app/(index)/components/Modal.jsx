@@ -1,13 +1,9 @@
 'use client'
 
-import Form from './Form'
-
 export default function Modal ({
   showModal,
   setShowModal,
-  handleSubmit,
-  handleChange,
-  gift
+  children
 }) {
   return (
     <>
@@ -24,20 +20,14 @@ export default function Modal ({
             <div className='relative w-auto my-6 mx-auto max-w-3xl'>
               {/* content */}
               <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none'>
-                {/* header */}
                 <div className='flex items-start justify-between p-6 py-4 border-b border-solid border-slate-200 rounded-t'>
                   <h3 className='text-2xl font-semibold'>
                     Agrega el regalo
                   </h3>
                 </div>
-                {/* body */}
+
                 <div className='relative p-6 flex-auto'>
-                  <Form
-                    handleChange={handleChange}
-                    handleSubmit={handleSubmit}
-                    gift={gift}
-                    setShowModal={setShowModal}
-                  />
+                  {children}
                 </div>
               </div>
             </div>

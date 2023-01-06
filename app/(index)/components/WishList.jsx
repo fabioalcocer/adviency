@@ -3,6 +3,7 @@
 
 import { useState } from 'react'
 import useLocalStorage from '../hooks/useLocalStorage'
+import Form from './Form'
 import Modal from './Modal'
 
 function WishList () {
@@ -24,37 +25,11 @@ function WishList () {
     }
   }
 
-  const handleChange = (e) => {
-    console.log(e.target.value)
-    console.log(e.target.name)
-
-    const { name, value, checked, type } = e.target
-
-    setGift({
-      ...gift,
-      [name]: type === 'checkbox' ? checked : value
-    })
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (!e.target.name.value.trim() || gift.quantity < 1) return
-
-    createNewGift(gift)
-
-    setShowModal(false)
-
-    setGift({
-      id: +new Date(),
-      name: '',
-      image: '',
-      quantity: 1
-    })
-  }
-
   const handleEdit = (gift) => {
     setShowModal(true)
     console.log(gift)
+    return gift
+
     // setGifts((items) => {
     //   return items.map((_gift) => (_gift.id === gift.id ? gift : _gift))
     // })
@@ -70,13 +45,14 @@ function WishList () {
         Whishlist
       </h1>
 
-      <Modal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-        gift={gift}
-      />
+      <Modal showModal={showModal} setShowModal={setShowModal}>
+        <Form
+          setShowModal={setShowModal}
+          setGift={setGift}
+          createNewGift={createNewGift}
+          gift={gift}
+        />
+      </Modal>
 
       <div>
         <ul className='flex flex-col gap-2'>
@@ -87,7 +63,7 @@ function WishList () {
                     className='flex w-full rounded-md overflow-hidden'
                     key={index}
                   >
-                    <li className='flex gap-4 bg-slate-50 items-center w-full'>
+                    <li className='flex gap-4 bg-slate-50 items-center w-full pr-3'>
                       <img
                         className='w-20 h-20 object-cover'
                         src={gift.image}
@@ -104,18 +80,22 @@ function WishList () {
                           {gift.receiver}
                         </p>
                       </div>
+
+                      <div className='flex items-center gap-3 ml-auto'>
+                        <button
+                          className='p-2 py-1 rounded-sm grid place-content-center bg-emerald-700 text-white'
+                          onClick={() => handleEdit(gift)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className='p-2 py-1 rounded-sm grid place-content-center bg-rose-600 text-white'
+                          onClick={() => handleDelete(gift.id)}
+                        >
+                          X
+                        </button>
+                      </div>
                     </li>
-                    <button
-                      className='p-2 py-0 grid place-content-center bg-red-500 text-white'
-                      onClick={() => handleEdit(gift)}
-                    >Edit
-                    </button>
-                    <button
-                      className='p-2 py-0 grid place-content-center bg-red-500 text-white'
-                      onClick={() => handleDelete(gift.id)}
-                    >
-                      X
-                    </button>
                   </div>
                 ))
               )

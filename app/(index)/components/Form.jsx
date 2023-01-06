@@ -1,4 +1,29 @@
-function Form ({ handleSubmit, handleChange, gift, setShowModal }) {
+function Form ({ createNewGift, setGift, gift, setShowModal }) {
+  const handleChange = (e) => {
+    const { name, value, checked, type } = e.target
+
+    setGift({
+      ...gift,
+      [name]: type === 'checkbox' ? checked : value
+    })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (!e.target.name.value.trim() || gift.quantity < 1) return
+
+    createNewGift(gift)
+
+    setShowModal(false)
+
+    setGift({
+      id: +new Date(),
+      name: '',
+      image: '',
+      quantity: 1
+    })
+  }
+
   return (
     <form className='flex gap-4 flex-col' onSubmit={handleSubmit}>
       <input
@@ -58,7 +83,6 @@ function Form ({ handleSubmit, handleChange, gift, setShowModal }) {
         >
           Add
         </button>
-
       </div>
     </form>
   )
