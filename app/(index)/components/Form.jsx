@@ -4,8 +4,8 @@ function Form ({ handleSubmit, handleChange, gift, setShowModal }) {
       <input
         value={gift.name}
         name='name'
-        placeholder='Enter gift name'
         type='text'
+        placeholder='Enter gift name'
         onChange={handleChange}
         autoComplete='off'
         className='peer w-full rounded-md border border-slate-300 bg-white p-2 text-sm placeholder-slate-600/80
@@ -15,23 +15,35 @@ function Form ({ handleSubmit, handleChange, gift, setShowModal }) {
       <input
         value={gift.image}
         name='image'
-        placeholder='Enter url'
         type='text'
+        placeholder='Enter url'
         onChange={handleChange}
         className='peer w-full rounded-md border border-slate-300 bg-white p-2 text-sm placeholder-slate-600/80
           focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500
           focus:invalid:border-pink-500 focus:invalid:ring-pink-500'
       />
-      <input
-        value={gift.quantity}
-        type='number'
-        name='quantity'
-        placeholder='1'
-        onChange={handleChange}
-        className='w-10 peer rounded-md border border-slate-300 bg-white p-2 text-sm placeholder-slate-600/80
-          focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500
+      <div className='flex gap-5'>
+        <input
+          value={gift.receiver}
+          name='receiver'
+          type='text'
+          placeholder='Enter receiver'
+          onChange={handleChange}
+          className='peer w-full rounded-md border border-slate-300 bg-white p-2 text-sm placeholder-slate-600/80
+        focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500
           focus:invalid:border-pink-500 focus:invalid:ring-pink-500'
-      />
+        />
+        <input
+          value={gift.quantity}
+          name='quantity'
+          type='number'
+          placeholder='1'
+          onChange={handleChange}
+          className='w-10 peer rounded-md border border-slate-300 bg-white p-2 text-sm placeholder-slate-600/80
+        focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500
+        focus:invalid:border-pink-500 focus:invalid:ring-pink-500'
+        />
+      </div>
       <div className='flex items-center justify-between gap-8'>
         <button
           className='pl-1 pr-2 py-1 bg-slate-100 text-slate-600 font-semibold rounded-sm flex-1'

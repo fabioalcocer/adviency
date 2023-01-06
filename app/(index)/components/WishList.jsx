@@ -8,14 +8,15 @@ import Modal from './Modal'
 function WishList () {
   const [showModal, setShowModal] = useState(false)
 
+  const [gifts, setGifts] = useLocalStorage('gifts', [])
+
   const [gift, setGift] = useState({
     id: +new Date(),
     name: '',
     image: '',
-    quantity: 1
+    quantity: 1,
+    receiver: ''
   })
-
-  const [gifts, setGifts] = useLocalStorage('gifts', [])
 
   const createNewGift = (gift) => {
     if (!gifts.find((g) => g.name === gift.name)) {
@@ -51,6 +52,14 @@ function WishList () {
     })
   }
 
+  const handleEdit = (gift) => {
+    setShowModal(true)
+    console.log(gift)
+    // setGifts((items) => {
+    //   return items.map((_gift) => (_gift.id === gift.id ? gift : _gift))
+    // })
+  }
+
   const handleDelete = (id) => {
     setGifts((gifts) => gifts.filter((gift) => gift.id !== id))
   }
@@ -58,7 +67,7 @@ function WishList () {
   return (
     <div className='bg-white text-slate-900 mx-auto max-w-md w-full p-6 flex flex-col gap-4 rounded-md'>
       <h1 className='text-4xl text-center text-red-500 font-semibold'>
-        Regalos
+        Whishlist
       </h1>
 
       <Modal
@@ -70,7 +79,7 @@ function WishList () {
       />
 
       <div>
-        <ul className='text-xl flex flex-col gap-2'>
+        <ul className='flex flex-col gap-2'>
           {gifts.length
             ? (
                 gifts.map((gift, index) => (
@@ -84,13 +93,23 @@ function WishList () {
                         src={gift.image}
                         alt='gift image'
                       />
-                      <p className='font-semibold flex items-center'>
-                        {gift.name}
-                        <span className='text-slate-700 text-base ml-1'>
-                          {`(x${gift.quantity})`}
-                        </span>
-                      </p>
+                      <div>
+                        <p className='font-semibold text-lg md:text-xl'>
+                          {gift.name}
+                          <span className='text-slate-700 text-base ml-1'>
+                            {`x${gift.quantity}`}
+                          </span>
+                        </p>
+                        <p className='text-slate-700 text-sm md:text-base'>
+                          {gift.receiver}
+                        </p>
+                      </div>
                     </li>
+                    <button
+                      className='p-2 py-0 grid place-content-center bg-red-500 text-white'
+                      onClick={() => handleEdit(gift)}
+                    >Edit
+                    </button>
                     <button
                       className='p-2 py-0 grid place-content-center bg-red-500 text-white'
                       onClick={() => handleDelete(gift.id)}
@@ -116,7 +135,7 @@ function WishList () {
       </div>
 
       <button
-        className='bg-red-500 text-white font-semibold p-2 rounded-md hover:bg-red-400'
+        className='bg-red-500 text-white active:bg-red-600 font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150'
         onClick={() => setGifts([])}
       >
         Delete All
