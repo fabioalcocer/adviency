@@ -20,10 +20,16 @@ function WishList () {
   const handleEdit = (gift) => {
     setShowModal(true)
     setEditGift(gift)
+  }
 
-    // setGifts((items) => {
-    //   return items.map((_gift) => (_gift.id === gift.id ? gift : _gift))
-    // })
+  const toEditGift = (editedGift) => {
+    setGifts((items) => {
+      return items.map((_gift) =>
+        _gift.id === editedGift.id ? editedGift : _gift
+      )
+    })
+
+    console.log(gifts)
   }
 
   const handleDelete = (id) => {
@@ -36,11 +42,17 @@ function WishList () {
         Whishlist
       </h1>
 
-      <Modal showModal={showModal} setShowModal={setShowModal}>
+      <Modal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        setEditGift={setEditGift}
+      >
         <Form
           setShowModal={setShowModal}
           createNewGift={createNewGift}
+          setEditGift={setEditGift}
           editGift={editGift}
+          toEditGift={toEditGift}
         />
       </Modal>
 
@@ -56,18 +68,18 @@ function WishList () {
                     <li className='flex gap-4 bg-slate-50 items-center w-full pr-3'>
                       <img
                         className='w-16 sm:w-20 h-20 object-cover'
-                        src={gift.image}
+                        src={gift?.image}
                         alt='gift image'
                       />
                       <div>
                         <p className='font-semibold text-lg md:text-xl'>
-                          {gift.name}
+                          {gift?.name}
                           <span className='text-slate-700 text-base ml-1'>
-                            {`x${gift.quantity}`}
+                            {`x${gift?.quantity}`}
                           </span>
                         </p>
                         <p className='text-slate-700 text-sm md:text-base'>
-                          {gift.receiver}
+                          {gift?.receiver}
                         </p>
                       </div>
 

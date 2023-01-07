@@ -2,7 +2,13 @@
 
 import { useState } from 'react'
 
-function Form ({ createNewGift, setShowModal, editGift }) {
+function Form ({
+  createNewGift,
+  setShowModal,
+  editGift,
+  setEditGift,
+  toEditGift
+}) {
   const [gift, setGift] = useState({
     id: +new Date(),
     name: editGift?.name ?? '',
@@ -11,21 +17,39 @@ function Form ({ createNewGift, setShowModal, editGift }) {
     receiver: editGift?.receiver ?? ''
   })
 
-  const handleChange = (e) => {
-    const { name, value, checked, type } = e.target
+  let editing = false
 
-    setGift({
-      ...gift,
-      [name]: type === 'checkbox' ? checked : value
-    })
+  if (editGift) editing = true
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+
+    console.log(editing)
+    editing
+      ? setEditGift({
+        ...editGift,
+        [name]: value
+      })
+      : setGift({
+        ...gift,
+        [name]: value
+      })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (!e.target.name.value.trim() || gift.quantity < 1) return
+
+    if (editing) return handleEdit()
+
+    handleAdd()
+  }
+
+  const handleAdd = () => {
+    console.log('se uso agregar')
+
+    if (!gift.name.trim() || gift.quantity < 1) return
 
     createNewGift(gift)
-
     setShowModal(false)
 
     setGift({
@@ -36,10 +60,19 @@ function Form ({ createNewGift, setShowModal, editGift }) {
     })
   }
 
+  const handleEdit = () => {
+    console.log('se uso editar')
+
+    if (!gift.name.trim() || gift.quantity < 1) return
+
+    toEditGift(editGift)
+    setShowModal(false)
+  }
+
   return (
     <form className='flex gap-4 flex-col' onSubmit={handleSubmit}>
       <input
-        value={gift.name}
+        value={editing ? editGift.name : gift.name}
         name='name'
         type='text'
         placeholder='Enter gift name'
@@ -50,7 +83,7 @@ function Form ({ createNewGift, setShowModal, editGift }) {
           focus:invalid:border-pink-500 focus:invalid:ring-pink-500'
       />
       <input
-        value={gift.image}
+        value={editing ? editGift.image : gift.image}
         name='image'
         type='text'
         placeholder='Enter url'
@@ -61,7 +94,7 @@ function Form ({ createNewGift, setShowModal, editGift }) {
       />
       <div className='flex gap-5'>
         <input
-          value={gift.receiver}
+          value={editing ? editGift.receiver : gift.receiver}
           name='receiver'
           type='text'
           placeholder='Enter receiver'
@@ -71,7 +104,7 @@ function Form ({ createNewGift, setShowModal, editGift }) {
           focus:invalid:border-pink-500 focus:invalid:ring-pink-500'
         />
         <input
-          value={gift.quantity}
+          value={editing ? editGift.quantity : gift.quantity}
           name='quantity'
           type='number'
           placeholder='1'

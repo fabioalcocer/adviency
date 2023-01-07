@@ -3,14 +3,20 @@
 export default function Modal ({
   showModal,
   setShowModal,
+  setEditGift,
   children
 }) {
+  const handleAddGift = () => {
+    setShowModal(true)
+    setEditGift(null)
+  }
+
   return (
     <>
       <button
         className='bg-red-500 text-white active:bg-red-600 font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150'
         type='button'
-        onClick={() => setShowModal(true)}
+        onClick={handleAddGift}
       >
         Agregar regalo
       </button>
