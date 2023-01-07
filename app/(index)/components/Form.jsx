@@ -24,7 +24,6 @@ function Form ({
   const handleChange = (e) => {
     const { name, value } = e.target
 
-    console.log(editing)
     editing
       ? setEditGift({
         ...editGift,
