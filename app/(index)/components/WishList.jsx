@@ -73,10 +73,10 @@ function WishList () {
                       <img
                         className='w-16 sm:w-20 h-20 object-cover'
                         src={
-                          isImage(gift.image)
-                            ? gift.image
-                            : 'https://static.vecteezy.com/system/resources/previews/010/263/593/original/round-gift-box-image-with-a-dark-red-color-wrap-paper-and-orange-color-ribbon-christmas-gift-on-a-transparent-background-gift-images-for-birthdays-anniversaries-or-christmas-events-design-free-png.png'
-                        }
+                      isImage(gift.image)
+                        ? gift.image
+                        : 'https://static.vecteezy.com/system/resources/previews/010/263/593/original/round-gift-box-image-with-a-dark-red-color-wrap-paper-and-orange-color-ribbon-christmas-gift-on-a-transparent-background-gift-images-for-birthdays-anniversaries-or-christmas-events-design-free-png.png'
+                    }
                         alt='gift image'
                       />
                       <div>
@@ -86,6 +86,10 @@ function WishList () {
                             {`x${gift?.quantity}`}
                           </span>
                         </p>
+                        <p className='text-emerald-600 text-base font-semibold'>
+                          {`$${gift.price * gift.quantity}`}
+                        </p>
+
                         <p className='text-slate-700 text-sm md:text-base'>
                           {gift?.receiver}
                         </p>

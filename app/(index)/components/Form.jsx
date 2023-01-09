@@ -31,7 +31,8 @@ function Form ({
     name: editGift?.name ?? '',
     image: editGift?.image ?? '',
     quantity: editGift?.quantity ?? 1,
-    receiver: editGift?.receiver ?? ''
+    receiver: editGift?.receiver ?? '',
+    price: editGift?.price ?? 0
   })
 
   let editing = false
@@ -81,7 +82,9 @@ function Form ({
       id: +new Date(),
       name: '',
       image: '',
-      quantity: 1
+      quantity: 1,
+      receiver: '',
+      price: 0
     })
   }
 
@@ -124,17 +127,30 @@ function Form ({
           Surprise me!
         </button>
       </div>
-      <input
-        value={editing ? editGift.image : gift.image}
-        name='image'
-        type='text'
-        placeholder='Enter url'
-        onChange={handleChange}
-        className='peer w-full rounded-md border border-slate-300 bg-white p-2 text-sm placeholder-slate-600/80
+      <div className='flex gap-3'>
+
+        <input
+          value={editing ? editGift.image : gift.image}
+          name='image'
+          type='text'
+          placeholder='Enter url'
+          onChange={handleChange}
+          className='peer w-full rounded-md border border-slate-300 bg-white p-2 text-sm placeholder-slate-600/80
           focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500
           focus:invalid:border-pink-500 focus:invalid:ring-pink-500'
-      />
-      <div className='flex gap-5'>
+        />
+        <input
+          value={editing ? editGift.price : gift.price}
+          name='price'
+          type='number'
+          placeholder='Enter price'
+          onChange={handleChange}
+          className='peer w-full rounded-md border border-slate-300 bg-white p-2 text-sm placeholder-slate-600/80
+          focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500
+          focus:invalid:border-pink-500 focus:invalid:ring-pink-500'
+        />
+      </div>
+      <div className='flex gap-3'>
         <input
           value={editing ? editGift.receiver : gift.receiver}
           name='receiver'
