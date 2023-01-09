@@ -38,6 +38,23 @@ function Form ({
 
   if (editGift) editing = true
 
+  const handleRandomGift = (e) => {
+    console.log(editGift)
+
+    e.preventDefault()
+
+    let randomGift = getRandomGift()
+
+    while (randomGift === gift.name) {
+      randomGift = getRandomGift()
+    }
+
+    setGift({
+      ...gift,
+      name: randomGift
+    })
+  }
+
   const handleChange = (e) => {
     const { name, value } = e.target
 
@@ -50,14 +67,6 @@ function Form ({
         ...gift,
         [name]: value
       })
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
-    if (editing) return handleEdit()
-
-    handleAdd()
   }
 
   const handleAdd = () => {
@@ -86,30 +95,17 @@ function Form ({
     setShowModal(false)
   }
 
-  const handleRandomGift = (e) => {
-    console.log(editGift)
-
+  const handleSubmit = (e) => {
     e.preventDefault()
 
-    let randomGift = getRandomGift()
+    if (editing) return handleEdit()
 
-    while (randomGift === gift.name) {
-      randomGift = getRandomGift()
-    }
-
-    setGift({
-      ...gift,
-      name: randomGift
-      // id: +new Date(),
-      // image: editGift?.image ?? '',
-      // quantity: editGift?.quantity ?? 1,
-      // receiver: editGift?.receiver ?? ''
-    })
+    handleAdd()
   }
 
   return (
     <form className='flex gap-4 flex-col' onSubmit={handleSubmit}>
-      <div>
+      <div className='flex gap-1'>
         <input
           value={editing ? editGift.name : gift.name}
           name='name'
@@ -121,7 +117,12 @@ function Form ({
         focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500
         focus:invalid:border-pink-500 focus:invalid:ring-pink-500'
         />
-        <button onClick={handleRandomGift}>Surprise me!</button>
+        <button
+          onClick={handleRandomGift}
+          className='text-sm py-2 px-3 rounded-md min-w-max bg-slate-100 text-slate-600 font-semibold hover:bg-slate-300 transition-colors duration-300'
+        >
+          Surprise me!
+        </button>
       </div>
       <input
         value={editing ? editGift.image : gift.image}
@@ -155,16 +156,16 @@ function Form ({
         focus:invalid:border-pink-500 focus:invalid:ring-pink-500'
         />
       </div>
-      <div className='flex items-center justify-between gap-8'>
+      <div className='flex items-center justify-between gap-8 mt-2'>
         <button
-          className='pl-1 pr-2 py-1 bg-slate-100 text-slate-600 font-semibold rounded-sm flex-1'
+          className='pl-1 pr-2 py-2 bg-slate-100 text-slate-600 font-semibold rounded-sm flex-1'
           onClick={() => setShowModal(false)}
         >
           Close
         </button>
 
         <button
-          className='bg-red-500 px-2 py-1 text-white font-semibold rounded-sm flex-1'
+          className='bg-red-500 px-2 py-2 text-white font-semibold rounded-sm flex-1'
           type='submit'
         >
           Add
