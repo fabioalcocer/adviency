@@ -6,6 +6,10 @@ import useLocalStorage from '../hooks/useLocalStorage'
 import Form from './Form'
 import Modal from './Modal'
 
+const isImage = (url) => {
+  return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url)
+}
+
 function WishList () {
   const [showModal, setShowModal] = useState(false)
   const [gifts, setGifts] = useLocalStorage('gifts', [])
@@ -68,7 +72,11 @@ function WishList () {
                     <li className='flex gap-4 bg-slate-50 items-center w-full pr-3'>
                       <img
                         className='w-16 sm:w-20 h-20 object-cover'
-                        src={gift?.image}
+                        src={
+                          isImage(gift.image)
+                            ? gift.image
+                            : 'https://static.vecteezy.com/system/resources/previews/010/263/593/original/round-gift-box-image-with-a-dark-red-color-wrap-paper-and-orange-color-ribbon-christmas-gift-on-a-transparent-background-gift-images-for-birthdays-anniversaries-or-christmas-events-design-free-png.png'
+                        }
                         alt='gift image'
                       />
                       <div>

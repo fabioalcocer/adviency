@@ -2,6 +2,23 @@
 
 import { useState } from 'react'
 
+const randomGifts = [
+  'Fernet',
+  'Notebook',
+  'Aire acondicionado',
+  'Medias',
+  'Auriculares',
+  '1kg de yerba',
+  'Vino',
+  'Camisa',
+  'Vestido',
+  'Paltas'
+]
+
+const getRandomGift = () => {
+  return randomGifts[Math.floor(Math.random() * randomGifts.length)]
+}
+
 function Form ({
   createNewGift,
   setShowModal,
@@ -60,6 +77,7 @@ function Form ({
   }
 
   const handleEdit = () => {
+    console.log(editing)
     console.log('se uso editar')
 
     if (!gift.name.trim() || gift.quantity < 1) return
@@ -68,19 +86,43 @@ function Form ({
     setShowModal(false)
   }
 
+  const handleRandomGift = (e) => {
+    console.log(editGift)
+
+    e.preventDefault()
+
+    let randomGift = getRandomGift()
+
+    while (randomGift === gift.name) {
+      randomGift = getRandomGift()
+    }
+
+    setGift({
+      ...gift,
+      name: randomGift
+      // id: +new Date(),
+      // image: editGift?.image ?? '',
+      // quantity: editGift?.quantity ?? 1,
+      // receiver: editGift?.receiver ?? ''
+    })
+  }
+
   return (
     <form className='flex gap-4 flex-col' onSubmit={handleSubmit}>
-      <input
-        value={editing ? editGift.name : gift.name}
-        name='name'
-        type='text'
-        placeholder='Enter gift name'
-        onChange={handleChange}
-        autoComplete='off'
-        className='peer w-full rounded-md border border-slate-300 bg-white p-2 text-sm placeholder-slate-600/80
-          focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500
-          focus:invalid:border-pink-500 focus:invalid:ring-pink-500'
-      />
+      <div>
+        <input
+          value={editing ? editGift.name : gift.name}
+          name='name'
+          type='text'
+          placeholder='Enter gift name'
+          onChange={handleChange}
+          autoComplete='off'
+          className='peer w-full rounded-md border border-slate-300 bg-white p-2 text-sm placeholder-slate-600/80
+        focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500
+        focus:invalid:border-pink-500 focus:invalid:ring-pink-500'
+        />
+        <button onClick={handleRandomGift}>Surprise me!</button>
+      </div>
       <input
         value={editing ? editGift.image : gift.image}
         name='image'
