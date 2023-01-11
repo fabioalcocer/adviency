@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import useLocalStorage from '../hooks/useLocalStorage'
 import Form from './Form'
 import Modal from './Modal'
@@ -14,6 +14,13 @@ function WishList () {
   const [showModal, setShowModal] = useState(false)
   const [gifts, setGifts] = useLocalStorage('gifts', [])
   const [editGift, setEditGift] = useState()
+
+  const total = useMemo(() => {
+    return gifts.reduce(
+      (acc, curr) => acc + curr.price * curr.quantity,
+      0
+    )
+  }, [gifts])
 
   const createNewGift = (gift) => {
     if (!gifts.find((g) => g.name === gift.name)) {
@@ -127,6 +134,8 @@ function WishList () {
               )}
         </ul>
       </div>
+
+      <div className='text-center font-semibold text-slate-800'>Precio Total: {total}</div>
 
       <button
         className='bg-red-500 text-white active:bg-red-600 font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150'
