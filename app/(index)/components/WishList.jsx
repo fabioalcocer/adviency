@@ -5,6 +5,7 @@ import { useState, useMemo } from 'react'
 import useLocalStorage from '../hooks/useLocalStorage'
 import Form from './Form'
 import Modal from './Modal'
+import Preview from './Preview'
 
 const isImage = (url) => {
   return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url)
@@ -66,6 +67,8 @@ function WishList () {
           toEditGift={toEditGift}
         />
       </Modal>
+
+      <Preview gifts={gifts} />
 
       <div>
         <ul className='flex flex-col gap-2'>
@@ -135,7 +138,9 @@ function WishList () {
         </ul>
       </div>
 
-      <div className='text-center font-semibold text-slate-800'>Precio Total: {total}</div>
+      <div className='text-center font-semibold text-slate-800'>
+        Precio Total: {total}
+      </div>
 
       <button
         className='bg-red-500 text-white active:bg-red-600 font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150'
